@@ -1,0 +1,64 @@
+create database "student-management";
+
+--drop database "student-management";
+
+create table "admin"(
+	id  SERIAL PRIMARY KEY,
+	username varchar(255) not null unique,
+	password text not null
+);
+
+CREATE TABLE student (
+    id  SERIAL PRIMARY KEY,
+    student_code VARCHAR(255) NOT NULL UNIQUE,
+    name VARCHAR(255) NOT NULL,
+    grade VARCHAR(255),
+    birthday DATE,
+    address TEXT,
+    notes TEXT
+);
+
+CREATE TABLE course (
+     id  SERIAL PRIMARY KEY,
+    course_code VARCHAR(255) NOT NULL UNIQUE,
+    name VARCHAR(255) NOT NULL,
+    lecture VARCHAR(255),
+    year DATE,
+    notes TEXT
+);
+
+CREATE TABLE student_course (
+    id  SERIAL PRIMARY KEY,
+    student_id INTEGER REFERENCES student(id) ON DELETE CASCADE,
+    course_id INTEGER REFERENCES course(id) ON DELETE CASCADE,
+    score DOUBLE PRECISION
+);
+
+INSERT INTO student (student_code, name, grade, birthday, address, notes)
+VALUES
+    ( 'S001', 'John Doe', '10A', '2005-02-15', '123 Main St, Anytown USA', 'Likes math and science'),
+    ( 'S002', 'Jane Smith', '11B', '2004-08-22', '456 Elm St, Anytown USA', 'Enjoys art and music'),
+    ( 'S003', 'Bob Johnson', '9C', '2006-05-03', '789 Oak St, Anytown USA', 'Plays on the soccer team'),
+    ( 'S004', 'Lisa Kim', '12A', '2003-11-12', '321 Pine St, Anytown USA', 'Volunteers at the animal shelter');
+
+INSERT INTO course (course_code, name, lecture, year, notes)
+VALUES
+    ( 'C001', 'Mathematics', 'Dr. Johnson', '2023-01-01', 'Covers algebra, geometry, and calculus'),
+    ( 'C002', 'English Literature', 'Prof. Jones', '2023-01-01', 'Reads and analyzes classic literature'),
+    ( 'C003', 'Chemistry', 'Dr. Smith', '2023-01-01', 'Explores the properties and reactions of elements'),
+    ( 'C004', 'Art History', 'Prof. Brown', '2023-01-01', 'Studies famous artists and their works');
+
+INSERT INTO student_course (student_id, course_id, score)
+VALUES
+    ( 1, 1, 85.0),
+    ( 1, 2, 92.5),
+    (1, 3, 78.0),
+    (2, 1, 93.5),
+    ( 2, 2, 89.0),
+    (2, 4, 87.5),
+    ( 3, 1, 80.0),
+    (3, 3, 92.0),
+    (4, 2, 91.0),
+    (4, 4, 88.5);
+
+
